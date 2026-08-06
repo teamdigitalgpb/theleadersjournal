@@ -428,25 +428,55 @@ line-height:1.8;
     color:#111;
 }
 
-book-card{
-    background:#fff;
+.book-card{
+    background:linear-gradient(180deg,#ffffff 0%,#fbf9f4 100%);
     border-radius:16px;
     overflow:hidden;
-    transition:.35s ease;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    border:1px solid rgba(201,162,39,.14);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease;
+    box-shadow:0 1px 2px rgba(17,17,17,.04), 0 16px 40px rgba(17,17,17,.06);
 }
 
 .book-card:hover{
     transform:translateY(-8px);
-    box-shadow:0 20px 45px rgba(0,0,0,.18);
+    box-shadow:0 1px 2px rgba(17,17,17,.06), 0 30px 60px rgba(17,17,17,.16);
+    border-color:rgba(201,162,39,.3);
+}
+
+.book-image{
+    position:relative;
+    padding:30px 24px 24px;
+    background:
+        radial-gradient(120% 90% at 50% 0%, rgba(201,162,39,.10), transparent 60%),
+        linear-gradient(180deg,#f3f1ea 0%,#e8e5db 100%);
+    perspective:900px;
+}
+
+.book-image::after{
+    content:"";
+    position:absolute;
+    left:14%;
+    right:14%;
+    bottom:10px;
+    height:22px;
+    background:radial-gradient(50% 100% at 50% 0%, rgba(17,17,17,.28), transparent 75%);
+    filter:blur(4px);
+    border-radius:50%;
 }
 
 .book-card img{
+    position:relative;
+    z-index:1;
+    display:block;
     width:100%;
     height:300px;
     object-fit:contain;
-    padding:18px;
-    background:#fff;
+    filter:drop-shadow(0 18px 22px rgba(17,17,17,.22));
+    transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.book-card:hover img{
+    transform:translateY(-4px) rotateY(-6deg) rotateX(2deg) scale(1.03);
 }
 
 .book-content{
@@ -484,6 +514,10 @@ header{
 .collection-grid{
     grid-template-columns:repeat(3,1fr);
     gap:18px;
+}
+
+.book-image{
+    padding:22px 18px 18px;
 }
 
 .book-card img{
@@ -555,9 +589,17 @@ nav{
     border-radius:12px;
 }
 
+.book-image{
+    padding:14px 10px 10px;
+}
+
+.book-image::after{
+    display:none;
+}
+
 .book-card img{
     height:150px;
-    padding:8px;
+    filter:drop-shadow(0 8px 10px rgba(17,17,17,.18));
 }
 
 .book-content{
@@ -613,6 +655,10 @@ nav{
 .collection-grid{
     grid-template-columns:repeat(3,1fr);
     gap:8px;
+}
+
+.book-image{
+    padding:10px 8px 8px;
 }
 
 .book-card img{
