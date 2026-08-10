@@ -12,12 +12,10 @@
     --gray:#9aa0a8;
     --border:rgba(255,255,255,0.10);
 }
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    transition:transform .35s ease, opacity .35s ease, box-shadow .35s ease, background .35s ease;
 }
 
 html{scroll-behavior:smooth;}
@@ -29,103 +27,21 @@ body{
         linear-gradient(135deg, #07090d 0%, #111722 45%, #0b0f17 100%);
     color:var(--white);
     line-height:1.6;
-    overflow-x:hidden;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity:0;
-        transform:translateY(16px);
-    }
-    to {
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes slideDown {
-    from {
-        opacity:0;
-        transform:translateY(-18px);
-    }
-    to {
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes floatBook {
-    0%, 100% {
-        transform:translateY(0) rotate(0deg);
-    }
-    50% {
-        transform:translateY(-10px) rotate(-0.25deg);
-    }
-}
-
-@keyframes glowPulse {
-    0%, 100% { box-shadow:0 12px 30px rgba(212,175,55,0.30); }
-    50% { box-shadow:0 16px 40px rgba(212,175,55,0.45); }
 }
 
 header {
-    animation: slideDown 0.8s ease-out both;
-}
-
-body > * {
-    animation: fadeInUp 0.9s ease both;
-}
-
-nav a {
-    opacity:0;
-    animation: fadeInUp 0.9s ease both;
-    animation-delay:0.2s;
-}
-
-.hero,
-.intro-strip,
-.collections,
-.why-panel,
-.features,
-footer {
-    animation: fadeInUp 0.85s ease both;
-}
-
-.hero-copy > * {
-    opacity:0;
-    animation: fadeInUp 0.9s ease both;
-}
-
-.hero-copy .hero-badge { animation-delay:0.15s; }
-.hero-copy h1 { animation-delay:0.25s; }
-.hero-copy p { animation-delay:0.35s; }
-.hero-actions { animation-delay:0.45s; }
-.hero-pills { animation-delay:0.55s; }
-
-.hero-card {
-    animation: fadeInUp 0.9s ease both;
-    animation-delay:0.3s;
-}
-
-.hero-card-grid img {
-    animation: fadeInUp 0.9s ease both, floatBook 10s ease-in-out infinite;
-    animation-delay:0.4s, 0s;
-}
-
-header{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    background:rgba(7, 9, 13, 0.82);
-    backdrop-filter:blur(18px);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 60px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.28);
-    z-index:999;
-    border-bottom:1px solid rgba(212,175,55,0.16);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(7, 9, 13, 0.92);
+    backdrop-filter: blur(18px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 60px;
+    z-index: 9999;
+    transform: translateY(0) !important;
 }
 
 .logo{
@@ -268,8 +184,7 @@ nav a:hover{
     height:auto;
     object-fit:contain;
     display:block;
-    animation: fadeInUp 0.9s ease both, floatBook 10s ease-in-out infinite;
-    animation-delay:0.4s, 0s;
+    animation:floatBook 10s ease-in-out infinite;
     transform-origin:center center;
 }
 
@@ -278,24 +193,16 @@ nav a:hover{
     height:auto;
 }
 
-.hero-card-copy{padding:16px 4px 0;}
-
-.intro-card,
-.book-card,
-.feature,
-.why-quote,
-.section-header,
-.collection-grid {
-    opacity:0;
-    animation: fadeInUp 0.9s ease both;
+@keyframes floatBook {
+    0%, 100% {
+        transform:translateY(0) rotate(0deg);
+    }
+    50% {
+        transform:translateY(-10px) rotate(-0.25deg);
+    }
 }
 
-.intro-card { animation-delay:0.25s; }
-.book-card { animation-delay:0.3s; }
-.feature { animation-delay:0.35s; }
-.why-quote { animation-delay:0.4s; }
-.section-header { animation-delay:0.3s; }
-.collection-grid { animation-delay:0.35s; }
+.hero-card-copy{padding:16px 4px 0;}
 
 .hero-card-copy h3{
     font-size:1.15rem;
@@ -432,8 +339,6 @@ nav a:hover{
 }
 
 .why-panel{
-    display:grid;
-    grid-template-columns:1.3fr 0.7fr;
     gap:40px;
     margin:60px auto 40px;
     max-width:1180px;
@@ -454,6 +359,7 @@ nav a:hover{
 .why-section h3{
     font-family:Playfair Display,serif;
     font-size:1.4rem;
+    margin-top: 20px;
     margin-bottom:10px;
     color:var(--white);
 }
@@ -489,6 +395,7 @@ nav a:hover{
     flex-direction:column;
     justify-content:center;
     box-shadow:0 18px 50px rgba(0,0,0,0.22);
+    margin-top:20px;
 }
 
 .why-quote-title{
@@ -668,9 +575,22 @@ footer p{opacity:.85; line-height:1.8;}
 }
 
 @media (max-width:768px){
-    header{padding:15px;}
+    header{
+        padding:15px;
+        flex-direction: column;
+        align-items: stretch;
+        gap:12px;
+    }
     .logo{font-size:20px;}
-    nav{display:none;}
+    nav{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:14px;
+    }
+    nav a{
+        margin-left:0;
+    }
     .hero{padding:110px 20px 60px; min-height:85vh;}
     .hero-copy h1{font-size:2.2rem;}
     .hero-card-grid img{height:140px;}
@@ -701,4 +621,35 @@ footer p{opacity:.85; line-height:1.8;}
     .hero p{font-size:14px;}
     .features{grid-template-columns:1fr;}
 }
+* {
+  opacity: 0;
+  animation: revealLeft 0.8s ease forwards;
+}
 
+/* Optional stagger timing */
+h1, h2, h3 {
+  animation-delay: 0.1s;
+}
+
+p, li {
+  animation-delay: 0.2s;
+}
+
+a, button {
+  animation-delay: 0.3s;
+}
+
+img, .card, .service, .practice_item {
+  animation-delay: 0.4s;
+}
+
+@keyframes revealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
