@@ -1,56 +1,64 @@
-// Scroll Animation Handler
-document.addEventListener('DOMContentLoaded', function() {
-  // Create Intersection Observer for scroll animations
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
+// Progressive enhancement: navigation and scroll effects never hide essential content.
+document.addEventListener('DOMContentLoaded', () => {
+  const menuButton = document.querySelector('.menu-toggle');
+  const navigation = document.querySelector('#site-navigation');
 
-  const observer = new IntersectionObserver(function(entries) {
+  if (menuButton && navigation) {
+    const closeMenu = () => {
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.setAttribute('aria-label', 'Open navigation');
+      navigation.classList.remove('is-open');
+    };
+
+    menuButton.addEventListener('click', () => {
+      const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', String(!isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? 'Open navigation' : 'Close navigation');
+      navigation.classList.toggle('is-open', !isOpen);
+    });
+
+    navigation.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeMenu();
+        menuButton.focus();
+      }
+    });
+
+    document.addEventListener('click', event => {
+      if (!navigation.contains(event.target) && !menuButton.contains(event.target)) {
+        closeMenu();
+      }
+    });
+  }
+
+  // Avoid motion for users who request reduced motion, and keep content visible
+  // in browsers that do not support IntersectionObserver.
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
+        observer.unobserve(entry.target);
       }
     });
-  }, observerOptions);
-
-  // Add scroll-animate class and observe elements
-  const elementsToAnimate = [
-    // Cards
-    '.intro-card',
-    '.card',
-    '.feature',
-    '.book-card',
-    // Sections
-    '.section-header',
-    '.hero-copy',
-    '.hero-card',
-    // Individual elements
-    'h2',
-    '.collections'
-  ];
-
-  elementsToAnimate.forEach(selector => {
-    document.querySelectorAll(selector).forEach(element => {
-      element.classList.add('scroll-animate');
-      observer.observe(element);
-    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
   });
 
-  // Add staggered delays to elements
-  document.querySelectorAll('.intro-card').forEach((el, index) => {
-    el.style.animationDelay = `${index * 0.1}s`;
-  });
+  const elementsToAnimate = document.querySelectorAll(
+    '.intro-card, .feature, .book-card, .section-header, .hero-copy, .hero-card, .why-panel'
+  );
 
-  document.querySelectorAll('.book-card').forEach((el, index) => {
-    el.style.animationDelay = `${index * 0.1}s`;
-  });
-
-  document.querySelectorAll('.feature').forEach((el, index) => {
-    el.style.animationDelay = `${index * 0.1}s`;
-  });
-
-  document.querySelectorAll('.card').forEach((el, index) => {
-    el.style.animationDelay = `${index * 0.1}s`;
+  elementsToAnimate.forEach((element, index) => {
+    element.classList.add('scroll-animate');
+    element.style.animationDelay = `${(index % 4) * 0.08}s`;
+    observer.observe(element);
   });
 });
