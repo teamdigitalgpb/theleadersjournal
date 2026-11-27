@@ -618,38 +618,7 @@ footer p{opacity:.8; line-height:1.8; color:#555555;}
     .hero p{font-size:14px;}
     .features{grid-template-columns:1fr;}
 }
-* {
-  opacity: 0;
-  animation: revealLeft 0.8s ease forwards;
-}
-
-/* Optional stagger timing */
-h1, h2, h3 {
-  animation-delay: 0.1s;
-}
-
-p, li {
-  animation-delay: 0.2s;
-}
-
-a, button {
-  animation-delay: 0.3s;
-}
-
-img, .card, .service, .practice_item {
-  animation-delay: 0.4s;
-}
-
-@keyframes revealLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+/* Page content remains visible by default; animate only observed elements. */
 
 /* Scroll animations */
 @keyframes scrollFadeInUp {
@@ -731,4 +700,95 @@ nav a::before {
 
 nav a:hover::before {
   width: 100%;
+}
+
+
+/* Accessible mobile navigation */
+.menu-toggle {
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:5px;
+    width:44px;
+    height:44px;
+    border:1px solid rgba(212,175,55,0.35);
+    border-radius:10px;
+    background:transparent;
+    cursor:pointer;
+}
+.menu-toggle span {
+    display:block;
+    width:20px;
+    height:2px;
+    border-radius:2px;
+    background:var(--black);
+    transition:transform .2s ease, opacity .2s ease;
+}
+.menu-toggle:focus-visible,
+nav a:focus-visible,
+button:focus-visible,
+.order-btn:focus-visible,
+.hero-link:focus-visible {
+    outline:3px solid var(--gold-dark);
+    outline-offset:3px;
+}
+
+@media (max-width:768px) {
+    header { position:sticky; padding:12px 18px; gap:12px; }
+    .logo { font-size:clamp(16px, 4vw, 20px); }
+    .menu-toggle { display:flex; flex-shrink:0; }
+    nav {
+        display:none;
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+        padding:12px 18px 18px;
+        background:rgba(255,253,248,.98);
+        border-bottom:1px solid rgba(212,175,55,.2);
+        box-shadow:0 12px 22px rgba(0,0,0,.08);
+    }
+    nav.is-open { display:flex; flex-direction:column; gap:4px; }
+    nav a { margin:0; padding:12px 4px; }
+    .hero { padding:64px 20px 48px; min-height:auto; }
+    .collection-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .book-card img { height:220px; }
+    .book-content h3 { font-size:16px; }
+    .book-content p { display:block; font-size:13px; margin-bottom:18px; }
+    .order-btn { font-size:13px; padding:11px; }
+    .why-panel { margin:36px auto 28px; }
+}
+
+@media (max-width:480px) {
+    header { padding:10px 14px; }
+    .hero { padding:48px 18px 36px; }
+    .hero-copy h1 { font-size:1.9rem; }
+    .hero-badge { font-size:.7rem; letter-spacing:.1em; }
+    .collection-grid { grid-template-columns:1fr; gap:18px; }
+    .book-card { display:grid; grid-template-columns:minmax(110px, 38%) 1fr; align-items:stretch; }
+    .book-card img { height:100%; min-height:180px; padding:10px; }
+    .book-content { padding:14px; }
+    .series { font-size:10px; }
+    .book-content h3 { font-size:15px; }
+    .book-content p { display:block; font-size:12px; margin-bottom:14px; }
+    .order-btn { font-size:12px; padding:10px 8px; }
+    .section { padding:64px 6%; }
+    .section-header { margin-bottom:36px; }
+    .section-header h2 { font-size:30px; }
+    .features { grid-template-columns:1fr; }
+    footer { padding:42px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior:auto !important;
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+    }
+    .scroll-animate { opacity:1 !important; }
+    .hero button:hover,
+    .order-btn:hover,
+    .buy:hover { transform:none; scale:1; }
 }
